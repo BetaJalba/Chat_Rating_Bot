@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.Objects;
+import java.util.StringTokenizer;
 
 public class DataService {
     private static DataService instance;
@@ -42,7 +43,7 @@ public class DataService {
                     for (int i = 1; i <= columnCount; i++) {
                         result.append(rs.getObject(i));
                         if (i < columnCount)
-                            result.append("\t");
+                            result.append(", ");
                         else
                             result.append("\n");
                     }
@@ -80,26 +81,85 @@ public class DataService {
         }
     }
 
-    public String getUsers() {
-        String query = "SELECT * FROM user";
+    public int insertUser(long userId, String name) {
+        String query = "INSERT INTO user(id, name) VALUES (?, ?)";
 
-        return executeQuery(query);
+        return executeUpdate(query, userId, name);
     }
 
-    public int insertUser(long userId) {
-        String query = "INSERT INTO user(id) VALUES (?)";
+    public int insertChat(long chatId) {
+        String query = "INSERT INTO chat(id) VALUES (?)";
 
-        return executeUpdate(query, userId);
+        return executeUpdate(query, chatId);
     }
 
-    public int incrementUserMessages(long userId) {
-        String query = "UPDATE user SET message_count = (message_count + 1) WHERE id = ?";
+    public int incrementUserMessages(long userId, long chatId) {
+        String query = "UPDATE participates SET message_count = (message_count + 1) WHERE user_id = ? AND chat_id = ?";
 
-        return executeUpdate(query, userId);
+        return executeUpdate(query, userId, chatId);
+    }
+
+    public void addParticipation(long userId, long chatId) {
+        String query = "INSERT INTO participates (user_id, chat_id) VALUES (?, ?)";
+        executeUpdate(query, userId, chatId);
+    }
+
+    public boolean checkChat(long chatId){
+        String query = "SELECT * FROM chat WHERE id = ?";
+        return executeQuery(query, chatId) != null;
     }
 
     public boolean checkUser(long userId) {
         String query = "SELECT * FROM user WHERE id = ?";
         return executeQuery(query, userId) != null;
+    }
+
+    public double getUserScore(long userId, long chatId) {
+        String query = "SELECT behavior_score FROM participates WHERE user_id = ? AND chat_id = ?";
+        return Float.parseFloat(executeQuery(query, userId, chatId));
+    }
+
+    public void updateUserScore(long userId, long chatId, double score) {
+        String query = "UPDATE participates SET behavior_score = ? WHERE user_id = ? AND chat_id = ?";
+        executeUpdate(query, score, userId, chatId);
+    }
+
+    public double getMessageCountUserInChat(long userId, long chatId) {
+        String query = "SELECT message_count FROM participates WHERE user_id = ? AND chat_id = ?";
+        return Double.parseDouble(executeQuery(query, userId, chatId));
+    }
+
+    public String getChatLeaderboard(long chatId) {
+        String query = """
+                SELECT
+                    u.name,
+                    p.behavior_score
+                FROM participates p
+                JOIN user u ON u.id = p.user_id
+                WHERE p.chat_id = ?
+                ORDER BY p.behavior_score DESC;
+                """;
+
+        return executeQuery(query, chatId);
+    }
+
+    public long getTotalMessagesUser(long userId) {
+        String query = "SELECT COALESCE(SUM(message_count), 0) FROM participates WHERE user_id = ?";
+        return Long.parseLong(executeQuery(query, userId));
+    }
+
+    public double getMeanBehaviorScoreUser(long userId) {
+        String query = "SELECT COALESCE(AVG(behavior_score), 1.0) FROM participates WHERE user_id = ?";
+        return Double.parseDouble(executeQuery(query, userId));
+    }
+
+    public double getMeanBehaviorScoreAllChats() {
+        String query = "SELECT COALESCE(AVG(behavior_score), 1.0) FROM participates";
+        return Double.parseDouble(executeQuery(query));
+    }
+
+    public boolean checkUserInChat(long userId, long chatId) {
+        String query = "SELECT * FROM participates WHERE user_id = ? AND chat_id = ?";
+        return executeQuery(query, userId, chatId) != null;
     }
 }

@@ -20,7 +20,7 @@ public class Main {
         // Using try-with-resources to allow autoclose to run upon finishing
         try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
             botsApplication.registerBot(botToken, new Bot(botToken));
-            System.out.println("MyAmazingBot successfully started!");
+            System.out.println( configurationService.getProperty("BOT_NAME") + " successfully started!");
 
             Thread.currentThread().join();
         } catch (Exception e) {
