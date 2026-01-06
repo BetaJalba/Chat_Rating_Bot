@@ -1,6 +1,6 @@
 
 ## Introduction
----
+
 What will follow is a thorough and straightforward documentation on the description, support
 and deployment of an automatic chat detection and rating bot. Said bot will only require a manual
 startup procedure and will then automatically detect, gather and organize all of the data it needs.
@@ -13,13 +13,13 @@ messages said in the chat and give them scores, by utilizing APIs implemented in
 detection and filtering, based on editable parameters such as: aggressiveness, intent, irony, sarcasm.
 **The bot will only store the scores and completely discard the message right after analysis.** Next,
 all of the processed data will be added to the user’s database and be confronted with their personality
-traits so to see how to adjust the scores. The user’s data, which will ultimately be organized in ratings
+traits so to see how to adjust the scores. <s>The user’s data, which will ultimately be organized in ratings
 called “Chat Scores”, will have different timestamps such as: lifetime, daily, weekly, during
-arguments. The chat scores can be consulted by users at any time and can be erased, but not altered.
+arguments.</s> The chat scores can be consulted by users at any time <s>and can be erased, but not altered.</s>
 
 
 ## APIs Implemented
----
+
 While this project initially foresaw the use of multiple APIs, technical limitations made me
 decide to drop the personality analysis due to time and financial constraints. The project currently
 implements Perspective, a decently powerful machine learning REST API that allows users to receive
@@ -31,7 +31,7 @@ API documentation: [Click here](https://support.perspectiveapi.com/s/docs?langua
 
 
 ## Setup Guide
----
+
 The setup procedure is pretty straightforward. Once the repository, found at
 [Here](https://github.com/BetaJalba/Chat_Rating_Bot), has been forked it is necessary to first create a
 config.properties file inside of /src/main/resources
@@ -55,7 +55,7 @@ customized:
 
 
 ## Commands List and Description
----
+
 The bot’s commands mainly revolve around viewing the scores, either as a leaderboard or as a
 per user or per chat basis; the bot also keeps track of the amount of messages an user has sent in each
 chat. Here’s a list of all the available commands, each with a brief description:
