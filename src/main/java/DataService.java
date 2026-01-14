@@ -1,6 +1,4 @@
 import java.sql.*;
-import java.util.Objects;
-import java.util.StringTokenizer;
 
 public class DataService {
     private static DataService instance;

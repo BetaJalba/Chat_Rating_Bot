@@ -1,8 +1,6 @@
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.message.Message;
-
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class BotFunctions {
     private final DataService dataService = DataService.getInstance();
