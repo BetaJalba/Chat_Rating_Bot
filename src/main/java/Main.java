@@ -14,7 +14,7 @@ public class Main {
         try (TelegramBotsLongPollingApplication botsApplication = new TelegramBotsLongPollingApplication()) {
             botsApplication.registerBot(botToken, new Bot(botToken));
             String botName = configurationService.getProperty("BOT_NAME") != null ? configurationService.getProperty("BOT_NAME") : "Bot";
-            System.out.println( configurationService.getProperty("BOT_NAME") + " successfully started!");
+            System.out.println(botName + " successfully started!");
 
             Thread.currentThread().join();
         } catch (Exception e) {
