@@ -24,7 +24,7 @@ public class BotFunctions {
             dataService.insertChat(chatId);
         }
         if (!dataService.checkUser(userId)){
-            dataService.insertUser(userId, user.getUserName() != null ? user.getUserName() : null);
+            dataService.insertUser(userId, user.getUserName() != null ? user.getUserName() : String.valueOf(user.getId()));
             resp = configurationService.getProperty("WELCOME_MESSAGE");
         }
         if (!dataService.checkUserInChat(userId, chatId))

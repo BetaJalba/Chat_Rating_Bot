@@ -39,4 +39,3 @@ build/
 
 ### Custom ###
 /src/main/resources/config.properties
-/database/data.db
