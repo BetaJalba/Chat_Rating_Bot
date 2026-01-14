@@ -143,9 +143,10 @@ public class DataService {
         return executeQuery(query, chatId);
     }
 
+    // Coalesce ritorna il primo campo non null, in questo caso lo usiamo per impostare una default value
     public long getTotalMessagesUser(long userId) {
         String query = "SELECT COALESCE(SUM(message_count), 0) FROM participates WHERE user_id = ?";
-        return Long.parseLong(executeQuery(query, userId));
+        return Long.parseLong(executeQuery(query, userId).trim());
     }
 
     public double getMeanBehaviorScoreUser(long userId) {

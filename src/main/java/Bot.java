@@ -39,32 +39,36 @@ public class Bot implements LongPollingSingleThreadUpdateConsumer {
         if (!msg.hasText())
             return "";
 
-        switch (msg.getText()) {
-            case "/leaderboard" -> {
-                return botFunctions.displayLeaderboard(msg);
-            }
-            case "/score" -> {
-                return botFunctions.displayUserScore(msg);
-            }
-            case "/chat_messages" -> {
-                return botFunctions.displayMessageCountChat(msg);
-            }
-            case "/all_user_messages" -> {
-                return botFunctions.displayTotalMessagesUser(msg);
-            }
-            case "/mean_user_behavior" -> {
-                return botFunctions.displayMeanBehaviorScoreUser(msg);
-            }
-            case "/mean_global_behavior" -> {
-                return botFunctions.displayMeanBehaviorScoreAllChats();
-            }
-            case "/help" -> {
-                return botFunctions.displayHelp();
-            }
-            default -> {
-                return botFunctions.standardProcedure(msg);
+        if (msg.getText().startsWith("/")) {
+            switch (msg.getText()) {
+                case "/leaderboard" -> {
+                    return botFunctions.displayLeaderboard(msg);
+                }
+                case "/score" -> {
+                    return botFunctions.displayUserScore(msg);
+                }
+                case "/chat_messages" -> {
+                    return botFunctions.displayMessageCountChat(msg);
+                }
+                case "/all_user_messages" -> {
+                    return botFunctions.displayTotalMessagesUser(msg);
+                }
+                case "/mean_user_behavior" -> {
+                    return botFunctions.displayMeanBehaviorScoreUser(msg);
+                }
+                case "/mean_global_behavior" -> {
+                    return botFunctions.displayMeanBehaviorScoreAllChats();
+                }
+                case "/help" -> {
+                    return botFunctions.displayHelp();
+                }
+                default -> {
+                    return "Sorry, I don't seem to recognize this command";
+                }
             }
         }
+
+        return botFunctions.standardProcedure(msg);
     }
 
     private void sendResponse(SendMessage response) {

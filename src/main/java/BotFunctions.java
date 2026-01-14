@@ -50,14 +50,31 @@ public class BotFunctions {
 
     public String displayHelp(){
         return """
+                Hello! It seems you require some help!
+                
+                --------------------------------------
+                
                 Commands:
-                    /leaderboard    - chat leaderboard
-                    /score  - user score in chat
-                    /help   - help
-                    /chat_messages  - number of messages sent in a chat
-                    /all_user_messages  - number of messages sent by a user globally
-                    /mean_user_behavior - mean score of user globally
-                    /mean_global_behavior   - mean score of chats globally
+                    /leaderboard    
+                    - chat leaderboard
+                    
+                    /score  
+                    - user score in chat
+                    
+                    /help   
+                    - help
+                    
+                    /chat_messages  
+                    - number of messages sent in a chat
+                    
+                    /all_user_messages  
+                    - number of messages sent by a user globally
+                    
+                    /mean_user_behavior 
+                    - mean score of user globally
+                    
+                    /mean_global_behavior   
+                    - mean score of chats globally
                 """;
     }
 

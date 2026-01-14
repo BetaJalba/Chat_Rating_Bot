@@ -63,7 +63,7 @@ public class BehaviorRater {
     private void updateRating(String responseBody, long userId, long chatId) throws JsonProcessingException {
         System.out.println(userId + "'s response body in chat " + chatId + ": \n" + responseBody);
 
-        String rateMessageConfig = configurationService.getProperty("RATE_MESSAGE");
+        String rateMessageConfig = configurationService.getProperty("RATE_MESSAGE") != null ? configurationService.getProperty("RATE_MESSAGE") : "TOXICITY";
         StringTokenizer attributeTokenizer = new StringTokenizer(rateMessageConfig.strip(), ",");
 
         ObjectMapper mapper = new ObjectMapper();
@@ -87,9 +87,10 @@ public class BehaviorRater {
         double behaviorScore = 1.0 - meanValue;
         behaviorScore = Math.max(0, Math.min(1, behaviorScore)); // clamp 0–1
 
-        double messageBias = Double.parseDouble(configurationService.getProperty("MESSAGE_BIAS"))/dataService.getMessageCountUserInChat(userId, chatId);
+        double biasConfig = configurationService.getProperty("MESSAGE_BIAS") != null ? Double.parseDouble(configurationService.getProperty("MESSAGE_BIAS")) : 0.1;
+        double messageBias = biasConfig/dataService.getMessageCountUserInChat(userId, chatId);
 
-        double alpha = Double.parseDouble(configurationService.getProperty("SCORE_ALPHA")); // smoothing factor
+        double alpha = configurationService.getProperty("SCORE_ALPHA") != null ? Double.parseDouble(configurationService.getProperty("SCORE_ALPHA")) : 0.1; // smoothing factor
         double prevScore = dataService.getUserScore(userId, chatId);
         double newUserScore = prevScore * (1 - alpha - messageBias) + behaviorScore * (alpha + messageBias);
 
