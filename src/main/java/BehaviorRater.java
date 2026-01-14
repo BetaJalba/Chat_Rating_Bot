@@ -19,7 +19,7 @@ public class BehaviorRater {
         OkHttpClient client = new OkHttpClient();
 
         StringBuilder requestedAttributesFormatted = new StringBuilder();
-        StringTokenizer requestedAttributes = new StringTokenizer(configurationService.getProperty("RATE_MESSAGE").strip(), ",");
+        StringTokenizer requestedAttributes = new StringTokenizer(configurationService.getProperty("RATE_MESSAGE") != null ? configurationService.getProperty("RATE_MESSAGE").strip() : "en", ",");
         while (requestedAttributes.hasMoreTokens()) {
             String attr = requestedAttributes.nextToken().strip();
             requestedAttributesFormatted.append("\"").append(attr).append("\": {}");
